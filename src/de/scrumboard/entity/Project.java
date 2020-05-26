@@ -117,7 +117,9 @@ public class Project {
     }
     //</editor-fold> 
 
+    @Override
+    public String toString() {
+        return name;
+    }
     
-    
-     
 }

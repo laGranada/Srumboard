@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
@@ -13,27 +14,27 @@
 
 <AnchorPane id="AnchorPane" prefHeight="743.0" prefWidth="1184.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.scrumboard.FXMLDocumentController">
    <children>
-      <TableView layoutX="38.0" layoutY="135.0" prefHeight="597.0" prefWidth="159.0">
+      <TableView fx:id="employeeTable" layoutX="38.0" layoutY="135.0" prefHeight="597.0" prefWidth="159.0">
         <columns>
           <TableColumn prefWidth="158.0" text="Employee" />
         </columns>
       </TableView>
-      <TreeTableView layoutX="197.0" layoutY="135.0" prefHeight="597.0" prefWidth="239.0">
+      <TreeTableView fx:id="toDoTable" layoutX="197.0" layoutY="135.0" prefHeight="597.0" prefWidth="239.0">
         <columns>
           <TreeTableColumn prefWidth="237.0" text="To Do" />
         </columns>
       </TreeTableView>
-      <TreeTableView layoutX="436.0" layoutY="135.0" prefHeight="597.0" prefWidth="239.0">
+      <TreeTableView fx:id="inProgressTable" layoutX="436.0" layoutY="135.0" prefHeight="597.0" prefWidth="239.0">
         <columns>
           <TreeTableColumn prefWidth="237.0" text="In Progress" />
         </columns>
       </TreeTableView>
-      <TreeTableView layoutX="675.0" layoutY="135.0" prefHeight="597.0" prefWidth="239.0">
+      <TreeTableView fx:id="toVerifyTable" layoutX="675.0" layoutY="135.0" prefHeight="597.0" prefWidth="239.0">
         <columns>
           <TreeTableColumn prefWidth="238.0" text="To Verify" />
         </columns>
       </TreeTableView>
-      <TreeTableView layoutX="914.0" layoutY="135.0" prefHeight="597.0" prefWidth="239.0">
+      <TreeTableView fx:id="doneTable" layoutX="914.0" layoutY="135.0" prefHeight="597.0" prefWidth="239.0">
         <columns>
           <TreeTableColumn prefWidth="238.0" text="Done" />
         </columns>
@@ -43,7 +44,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <ChoiceBox layoutX="113.0" layoutY="87.0" prefHeight="25.0" prefWidth="166.0" />
+      <ChoiceBox fx:id="projects" layoutX="113.0" layoutY="87.0" prefHeight="25.0" prefWidth="166.0" />
       <MenuButton layoutX="1089.0" layoutY="85.0" mnemonicParsing="false" text="Edit">
         <items>
           <MenuItem mnemonicParsing="false" text="Add Projekt" />
@@ -53,5 +54,10 @@
             <Font size="14.0" />
          </font>
       </MenuButton>
+      <Button fx:id="selectBtn" layoutX="288.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleChoiceBoxAction" text="Select">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
