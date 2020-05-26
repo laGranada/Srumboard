@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Scrumboard.jnlp">
+  <information>
+    <title>Scrumboard</title>
+    <vendor>MaggieSaurusRex</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="Scrumboard.jar" size="12501" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="800" height="600" main-class="scrumboard.Scrumboard"  name="Scrumboard" />
+  <update check="always"/>
+</jnlp>
