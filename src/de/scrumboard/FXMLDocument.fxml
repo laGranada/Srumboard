@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="743.0" prefWidth="1184.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scrumboard.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="743.0" prefWidth="1184.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.scrumboard.FXMLDocumentController">
    <children>
       <TableView layoutX="38.0" layoutY="135.0" prefHeight="597.0" prefWidth="159.0">
         <columns>

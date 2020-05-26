@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import de.scrumboard.entity.Employee;
 import de.scrumboard.entity.Project;
+import de.scrumboard.entity.Status;
 import de.scrumboard.entity.Task;
 import de.scrumboard.service.ScrumboardService;
 
@@ -40,7 +41,8 @@ public class ScrumboardDaoStub implements ScrumboardService{
             
             tasks.add(new Task(i, 
                                "Task " + i, 
-                               "description " + i));
+                               "description " + i,
+                                Status.TO_DO));
         
         }//end for
         
@@ -107,7 +109,7 @@ public class ScrumboardDaoStub implements ScrumboardService{
 
     @Override
     public Task createTask(Task task) {
-        return new Task(tasks.size() + 1, task.getName(), task.getDescription());
+        return new Task(tasks.size() + 1, task.getName(), task.getDescription(), task.getStatus());
     }
 
     @Override

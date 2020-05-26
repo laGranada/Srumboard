@@ -30,10 +30,11 @@ public class Task {
      * @param description
      * @param editor
      */
-    public Task(long id, String name, String description) {
+    public Task(long id, String name, String description, Status status) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.status = status;
     }
     
     

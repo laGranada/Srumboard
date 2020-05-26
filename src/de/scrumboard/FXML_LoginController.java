@@ -5,6 +5,8 @@
  */
 package de.scrumboard;
 
+import de.scrumboard.entity.Employee;
+import de.scrumboard.service.stub.ScrumboardDaoStub;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -26,6 +28,8 @@ import javafx.stage.Stage;
  * @author MaggieSaurusRex
  */
 public class FXML_LoginController implements Initializable {
+    
+    ScrumboardDaoStub dao = new ScrumboardDaoStub();
 
     @FXML
     private Label errorLabel;
@@ -41,18 +45,20 @@ public class FXML_LoginController implements Initializable {
     
     @FXML
     private void handleButtonAction(ActionEvent event) throws Exception{
-        System.out.println("Clicked login button");
-        errorLabel.setText("Username or password are wrong!");
-        
-        Parent homePageParent = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        Scene homePageScene = new Scene(homePageParent);
-        
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.hide();
-        appStage.setScene(homePageScene);
-        appStage.show();
-        
+        Employee emp = dao.findEmployeeByUsername(usernameTxtField.getText());
+        if(emp.getPassword().equals(pwField.getText())){
+            Parent homePageParent = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+            Scene homePageScene = new Scene(homePageParent);
+
+            Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            appStage.hide();
+            appStage.setScene(homePageScene);
+            appStage.show();
+        }else{
+            errorLabel.setText("False username or password!");
+        }    
     }
+    
     /**
      * Initializes the controller class.
      */
