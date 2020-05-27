@@ -147,7 +147,9 @@ public class Employee {
     }   
     //</editor-fold>  
 
-    
+    public String toFullName(){
+        return firstName + " " + lastName;
+    }
     
     
 }

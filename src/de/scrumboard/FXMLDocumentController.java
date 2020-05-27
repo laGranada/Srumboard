@@ -18,8 +18,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  *
@@ -37,6 +39,9 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private TableView<Employee> employeeTable = new TableView<>();
+    @FXML
+    private TableColumn<Employee, String> employeeColumn = new TableColumn<>();
+    
     @FXML
     private TreeTableView<Task> toDoTable = new TreeTableView<>();
     @FXML
@@ -59,13 +64,19 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void handleChoiceBoxAction(ActionEvent event){
         selectedProject = projects.getValue();
-        employeeTable.getItems().addAll(FXCollections.observableArrayList(selectedProject.getEmployees()));
+        System.out.println("Size of employees = " + selectedProject.getEmployees().size());
+        employeeTable.setItems(FXCollections.observableArrayList(selectedProject.getEmployees()));
+        //employeeTable.getItems().addAll(FXCollections.observableArrayList(selectedProject.getEmployees()));
+        employeeColumn.setCellValueFactory(new PropertyValueFactory<>("firstName" + "lastName"));
+       
+        
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         projectList = dao.findAllProjects();
         projects.setItems(FXCollections.observableArrayList(projectList));
+        employeeTable.getColumns().add(employeeColumn);
     }    
     
 }

@@ -49,8 +49,8 @@ public class ScrumboardDaoStub implements ScrumboardService{
         //generate two projects
         projects.add(new Project(1, 
                                  "Project 1", 
-                                 employees.subList(0, 2), 
-                                 tasks.subList(0, 2), 
+                                 employees.subList(0, 3), 
+                                 tasks.subList(0, 3), 
                                  "description 1"));
         projects.add(new Project(1, 
                                  "Project 2", 

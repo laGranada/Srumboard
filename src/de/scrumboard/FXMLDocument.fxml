@@ -16,7 +16,7 @@
    <children>
       <TableView fx:id="employeeTable" layoutX="38.0" layoutY="135.0" prefHeight="597.0" prefWidth="159.0">
         <columns>
-          <TableColumn prefWidth="158.0" text="Employee" />
+          <TableColumn fx:id="employeeColumn" prefWidth="158.0" text="Employee" />
         </columns>
       </TableView>
       <TreeTableView fx:id="toDoTable" layoutX="197.0" layoutY="135.0" prefHeight="597.0" prefWidth="239.0">
