@@ -80,6 +80,7 @@ public class FXMLDocumentController implements Initializable {
     private TableView<Task> doneTable;
     @FXML
     private TableColumn<Task, String> doneColumnDescription;
+    @FXML
     private TableColumn<Task, String> doneColumnEditor;
     
     
@@ -136,9 +137,9 @@ public class FXMLDocumentController implements Initializable {
         toVerifyColumnDescription.setCellValueFactory(new PropertyValueFactory<>("stringForTable"));
         toVerifyColumnEditor.setCellValueFactory(new PropertyValueFactory<>("editor"));
 
-//        //for doneTable
-//        doneColumnDescription.setCellValueFactory(new PropertyValueFactory<>("stringForTable"));
-//        doneColumnEditor.setCellValueFactory(new PropertyValueFactory<>("editor"));
+        //for doneTable
+        doneColumnDescription.setCellValueFactory(new PropertyValueFactory<>("stringForTable"));
+        doneColumnEditor.setCellValueFactory(new PropertyValueFactory<>("editor"));
 
         
     }
@@ -146,7 +147,9 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         projectList = dao.findAllProjects();
+        System.out.println("Size of project list = " + projectList.size());
         projects.setItems(FXCollections.observableArrayList(projectList));
+        System.out.println("Size of project list = " + projects.getItems().toString());
     }    
     
 }

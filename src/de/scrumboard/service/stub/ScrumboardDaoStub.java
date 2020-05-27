@@ -46,6 +46,9 @@ public class ScrumboardDaoStub implements ScrumboardService{
                                 Status.TO_DO));
         
         }//end for
+        Task inP = new Task(0, "Task " + 0,"description " + 0,Status.DONE);
+        inP.setEditor(employees.get(0));
+        tasks.add(inP);
         
         //generate two projects
         projects.add(new Project(1, 
@@ -53,10 +56,10 @@ public class ScrumboardDaoStub implements ScrumboardService{
                                  employees.subList(0, 3), 
                                  tasks.subList(0, 3), 
                                  "description 1"));
-        projects.add(new Project(1, 
+        projects.add(new Project(2, 
                                  "Project 2", 
-                                 employees.subList(3, 5), 
-                                 tasks.subList(3, 5), 
+                                 employees.subList(3, 6), 
+                                 tasks.subList(3, 7), 
                                  "description 2"));        
     }
 
