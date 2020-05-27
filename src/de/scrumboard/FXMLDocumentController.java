@@ -35,21 +35,23 @@ public class FXMLDocumentController implements Initializable {
     private ChoiceBox<Project> projects;
     
     @FXML
-    private Button selectBtn = new Button();
+    private Button selectBtn;
     
     @FXML
-    private TableView<Employee> employeeTable = new TableView<>();
+    private TableView<Employee> employeeTable;
     @FXML
-    private TableColumn<Employee, String> employeeColumn = new TableColumn<>();
+    private TableColumn<Employee, String> firstNameColumn;
+    @FXML
+    private TableColumn<Employee, String> lastNameColumn;
     
     @FXML
-    private TreeTableView<Task> toDoTable = new TreeTableView<>();
+    private TreeTableView<Task> toDoTable;
     @FXML
-    private TreeTableView<Task> inProgressTable = new TreeTableView<>();
+    private TreeTableView<Task> inProgressTable;
     @FXML
-    private TreeTableView<Task> toVerifyTable = new TreeTableView<>();
+    private TreeTableView<Task> toVerifyTable;
     @FXML
-    private TreeTableView<Task> doneTable = new TreeTableView<>();
+    private TreeTableView<Task> doneTable;
     
     private List<Project> projectList;
     
@@ -61,22 +63,24 @@ public class FXMLDocumentController implements Initializable {
 
     }
     
-    @FXML
+    @FXML //loadData
     private void handleChoiceBoxAction(ActionEvent event){
+        initiateCols();
         selectedProject = projects.getValue();
         System.out.println("Size of employees = " + selectedProject.getEmployees().size());
-        employeeTable.setItems(FXCollections.observableArrayList(selectedProject.getEmployees()));
-        //employeeTable.getItems().addAll(FXCollections.observableArrayList(selectedProject.getEmployees()));
-        employeeColumn.setCellValueFactory(new PropertyValueFactory<>("firstName" + "lastName"));
-       
-        
+        employeeTable.getItems().addAll(FXCollections.observableArrayList(selectedProject.getEmployees()));
+        System.out.println("Size of TableItems = " + employeeTable.getItems().toString());
+    }
+    
+    private void initiateCols(){
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));   
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));   
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         projectList = dao.findAllProjects();
         projects.setItems(FXCollections.observableArrayList(projectList));
-        employeeTable.getColumns().add(employeeColumn);
     }    
     
 }
