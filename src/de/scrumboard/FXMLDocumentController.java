@@ -93,24 +93,29 @@ public class FXMLDocumentController implements Initializable {
 
     }
     
-    @FXML //loadData
-    private void handleChoiceBoxAction(ActionEvent event){
+    @FXML 
+    private void loadTableData(ActionEvent event){
         selectedProject = projects.getValue();
         initiateCols();
         
         //for employeeTable
+        employeeTable.getItems().clear();
         employeeTable.getItems().addAll(FXCollections.observableArrayList(selectedProject.getEmployees()));
         
         //for toDoTable
+        toDoTable.getItems().clear();
         toDoTable.getItems().addAll(FXCollections.observableArrayList(selectedProject.findTasksByStatus(Status.TO_DO)));
         
         //for inProgressTable
+        inProgressTable.getItems().clear();
         inProgressTable.getItems().addAll(FXCollections.observableArrayList(selectedProject.findTasksByStatus(Status.IN_PROGRESS)));
         
         //for toVerifyTable
+        toVerifyTable.getItems().clear();
         toVerifyTable.getItems().addAll(FXCollections.observableArrayList(selectedProject.findTasksByStatus(Status.TO_VERIFY)));
         
         //for doneTable
+        doneTable.getItems().clear();
         doneTable.getItems().addAll(FXCollections.observableArrayList(selectedProject.findTasksByStatus(Status.DONE)));
     }
     
@@ -131,9 +136,9 @@ public class FXMLDocumentController implements Initializable {
         toVerifyColumnDescription.setCellValueFactory(new PropertyValueFactory<>("stringForTable"));
         toVerifyColumnEditor.setCellValueFactory(new PropertyValueFactory<>("editor"));
 
-        //for doneTable
-        doneColumnDescription.setCellValueFactory(new PropertyValueFactory<>("stringForTable"));
-        doneColumnEditor.setCellValueFactory(new PropertyValueFactory<>("editor"));
+//        //for doneTable
+//        doneColumnDescription.setCellValueFactory(new PropertyValueFactory<>("stringForTable"));
+//        doneColumnEditor.setCellValueFactory(new PropertyValueFactory<>("editor"));
 
         
     }
