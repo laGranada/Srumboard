@@ -21,11 +21,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 /**
  *
@@ -139,9 +136,23 @@ public class FXMLDocumentController implements Initializable {
 
         //for doneTable
         doneColumnDescription.setCellValueFactory(new PropertyValueFactory<>("stringForTable"));
-        doneColumnEditor.setCellValueFactory(new PropertyValueFactory<>("editor"));
-
-        
+        doneColumnEditor.setCellValueFactory(new PropertyValueFactory<>("editor"));  
+    }
+    
+    public void editSelectedEmployee(){
+    
+    }
+    public void editSelectedToDo(MouseEvent mouseEvent){
+    
+    }
+    public void editSelectedInProgress(MouseEvent mouseEvent){
+    
+    }
+    public void editSelectedToVerify(MouseEvent mouseEvent){
+    
+    }
+    public void editSelectedDone(MouseEvent mouseEvent){
+    
     }
     
     @Override

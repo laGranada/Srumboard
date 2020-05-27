@@ -7,8 +7,8 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -89,5 +89,33 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-   </children>
+      
+      <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="180.0" layoutY="160.0" onMousePressed="#editSelectedEmployee">
+        <image>
+            <Image url="@images/EditIcon.png">
+                
+            </Image>
+        </image>
+      </ImageView>
+      <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="440.0" layoutY="160.0" onMousePressed="#editSelectedToDo">
+         <image>
+            <Image url="@images/EditIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="711.0" layoutY="160.0" onMousePressed="#editSelectedInProgress">
+         <image>
+            <Image url="@images/EditIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="978.0" layoutY="160.0" onMousePressed="#editSelectedToVerify">
+         <image>
+            <Image url="@images/EditIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="1246.0" layoutY="160.0" onMousePressed="#editSelectedDone">
+         <image>
+            <Image url="@images/EditIcon.png" />
+         </image>
+      </ImageView>
+   </children> 
 </AnchorPane>
