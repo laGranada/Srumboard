@@ -147,13 +147,9 @@ public class Employee {
     }   
     //</editor-fold>  
 
-    public String toFullName(){
-        return firstName + " " + lastName;
-    }
-
     @Override
     public String toString() {
-        return "Employee{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + '}';
+        return firstName + " " + lastName;
     }
     
     

@@ -8,6 +8,7 @@ package de.scrumboard.service.dao;
 import java.util.List;
 import de.scrumboard.entity.Employee;
 import de.scrumboard.entity.Project;
+import de.scrumboard.entity.Status;
 import de.scrumboard.entity.Task;
 import de.scrumboard.service.ScrumboardService;
 
@@ -96,5 +97,7 @@ public class ScrumboardDao implements ScrumboardService{
     public boolean deleteProject(long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
     
 }

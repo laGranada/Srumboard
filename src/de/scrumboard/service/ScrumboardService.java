@@ -8,6 +8,7 @@ package de.scrumboard.service;
 import java.util.List;
 import de.scrumboard.entity.Employee;
 import de.scrumboard.entity.Project;
+import de.scrumboard.entity.Status;
 import de.scrumboard.entity.Task;
 
 /**

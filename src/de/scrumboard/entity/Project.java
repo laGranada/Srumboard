@@ -6,6 +6,7 @@
 package de.scrumboard.entity;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -50,6 +51,10 @@ public class Project {
     
     public boolean addTask(Task task){
        return tasks.add(task);
+    }
+    
+    public List<Task> findTasksByStatus(Status status) {
+        return tasks.stream().filter(t -> t.getStatus().equals(status)).collect(Collectors.toList());
     }
     
     //<editor-fold defaultstate="collapsed" desc="hashCode / equals">

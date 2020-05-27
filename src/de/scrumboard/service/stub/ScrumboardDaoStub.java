@@ -12,6 +12,7 @@ import de.scrumboard.entity.Project;
 import de.scrumboard.entity.Status;
 import de.scrumboard.entity.Task;
 import de.scrumboard.service.ScrumboardService;
+import java.util.stream.Collectors;
 
 /**
  *

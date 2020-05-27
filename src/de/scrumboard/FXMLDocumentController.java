@@ -7,6 +7,7 @@ package de.scrumboard;
 
 import de.scrumboard.entity.Employee;
 import de.scrumboard.entity.Project;
+import de.scrumboard.entity.Status;
 import de.scrumboard.entity.Task;
 import de.scrumboard.service.stub.ScrumboardDaoStub;
 import java.net.URL;
@@ -20,8 +21,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 
 /**
  *
@@ -36,7 +40,7 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private Button selectBtn;
-    
+    //TableView for employee
     @FXML
     private TableView<Employee> employeeTable;
     @FXML
@@ -44,14 +48,40 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TableColumn<Employee, String> lastNameColumn;
     
+    //TreeTable for toDo
     @FXML
-    private TreeTableView<Task> toDoTable;
+    private TableView<Task> toDoTable;
     @FXML
-    private TreeTableView<Task> inProgressTable;
+    private TableColumn<Task, String> toDoColumnDescription;
     @FXML
-    private TreeTableView<Task> toVerifyTable;
+    private TableColumn<Task, String> toDoColumnEditor;
+
+
+    //TreeTable for inProgress
     @FXML
-    private TreeTableView<Task> doneTable;
+    private TableView<Task> inProgressTable;
+    @FXML
+    private TableColumn<Task, String> inProgressColumnDescription;
+    @FXML
+    private TableColumn<Task, String> inProgressColumnEditor;
+
+    
+    //TreeTable for toVerify
+    @FXML
+    private TableView<Task> toVerifyTable;
+    @FXML
+    private TableColumn<Task, String> toVerifyColumnDescription;
+    @FXML
+    private TableColumn<Task, String> toVerifyColumnEditor;
+
+    
+    //TreeTable for done
+    @FXML
+    private TableView<Task> doneTable;
+    @FXML
+    private TableColumn<Task, String> doneColumnDescription;
+    private TableColumn<Task, String> doneColumnEditor;
+    
     
     private List<Project> projectList;
     
@@ -65,16 +95,47 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML //loadData
     private void handleChoiceBoxAction(ActionEvent event){
-        initiateCols();
         selectedProject = projects.getValue();
-        System.out.println("Size of employees = " + selectedProject.getEmployees().size());
+        initiateCols();
+        
+        //for employeeTable
         employeeTable.getItems().addAll(FXCollections.observableArrayList(selectedProject.getEmployees()));
-        System.out.println("Size of TableItems = " + employeeTable.getItems().toString());
+        
+        //for toDoTable
+        toDoTable.getItems().addAll(FXCollections.observableArrayList(selectedProject.findTasksByStatus(Status.TO_DO)));
+        
+        //for inProgressTable
+        inProgressTable.getItems().addAll(FXCollections.observableArrayList(selectedProject.findTasksByStatus(Status.IN_PROGRESS)));
+        
+        //for toVerifyTable
+        toVerifyTable.getItems().addAll(FXCollections.observableArrayList(selectedProject.findTasksByStatus(Status.TO_VERIFY)));
+        
+        //for doneTable
+        doneTable.getItems().addAll(FXCollections.observableArrayList(selectedProject.findTasksByStatus(Status.DONE)));
     }
     
     private void initiateCols(){
+        //for employeeTable
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));   
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));   
+        
+        //for toDoTable
+        toDoColumnDescription.setCellValueFactory(new PropertyValueFactory<>("stringForTable"));
+        toDoColumnEditor.setCellValueFactory(new PropertyValueFactory<>("editor"));
+        
+        //for inProgressTable
+        inProgressColumnDescription.setCellValueFactory(new PropertyValueFactory<>("stringForTable"));
+        inProgressColumnEditor.setCellValueFactory(new PropertyValueFactory<>("editor"));
+        
+        //for toVerifyTable
+        toVerifyColumnDescription.setCellValueFactory(new PropertyValueFactory<>("stringForTable"));
+        toVerifyColumnEditor.setCellValueFactory(new PropertyValueFactory<>("editor"));
+
+        //for doneTable
+        doneColumnDescription.setCellValueFactory(new PropertyValueFactory<>("stringForTable"));
+        doneColumnEditor.setCellValueFactory(new PropertyValueFactory<>("editor"));
+
+        
     }
     
     @Override
