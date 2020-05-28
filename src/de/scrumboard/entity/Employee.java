@@ -5,11 +5,13 @@
  */
 package de.scrumboard.entity;
 
+import java.io.Serializable;
+
 /**
  *
  * @author MaggieSaurusRex
  */
-public class Employee {
+public class Employee implements Serializable{
     
     private long id;
     

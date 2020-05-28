@@ -20,28 +20,28 @@
             <TableColumn fx:id="lastNameColumn" prefWidth="83.0" text="Last name" />
         </columns>
       </TableView>
-      <TableView fx:id="toDoTable" layoutX="204.0" layoutY="181.0" prefHeight="647.0" prefWidth="260.0">
+      <TableView fx:id="toDoTable" layoutX="204.0" layoutY="181.0" onDragDetected="#handleDragDetectedToDoTable" onDragDropped="#handleDragDroppedToDoTable" onDragOver="#handleDragOver" prefHeight="647.0" prefWidth="260.0">
         <columns>
           <TableColumn fx:id="toDoColumnDescription" prefWidth="133.0" text="Project" />
             <TableColumn fx:id="toDoColumnEditor" prefWidth="125.0" text="Editor" />
         </columns>
       </TableView>
-      <TableView fx:id="inProgressTable" layoutX="464.0" layoutY="181.0" prefHeight="647.0" prefWidth="269.0">
+      <TableView fx:id="inProgressTable" layoutX="464.0" layoutY="181.0" onDragDetected="#handleDragDetectedInProgressTable" onDragDropped="#handleDragDroppedInProgressTable" onDragOver="#handleDragOver" prefHeight="647.0" prefWidth="269.0">
         <columns>
-          <TableColumn fx:id="inProgressColumnDescription" prefWidth="120.0" text="Project" />
-            <TableColumn fx:id="inProgressColumnEditor" prefWidth="142.0" text="Editor" />
+          <TableColumn fx:id="inProgressColumnDescription" prefWidth="143.0" text="Project" />
+            <TableColumn fx:id="inProgressColumnEditor" prefWidth="125.0" text="Editor" />
         </columns>
       </TableView>
-      <TableView fx:id="toVerifyTable" layoutX="733.0" layoutY="181.0" prefHeight="647.0" prefWidth="269.0">
+      <TableView fx:id="toVerifyTable" layoutX="733.0" layoutY="181.0" onDragDetected="#handleDragDetectedToVerifyTable" onDragDropped="#handleDragDroppedToVerifyTable" onDragOver="#handleDragOver" prefHeight="647.0" prefWidth="269.0">
         <columns>
           <TableColumn fx:id="toVerifyColumnDescription" prefWidth="137.0" text="Project" />
-            <TableColumn fx:id="toVerifyColumnEditor" prefWidth="121.0" text="Editor" />
+            <TableColumn fx:id="toVerifyColumnEditor" prefWidth="131.0" text="Editor" />
         </columns>
       </TableView>
-      <TableView fx:id="doneTable" layoutX="1002.0" layoutY="181.0" prefHeight="647.0" prefWidth="269.0">
+      <TableView fx:id="doneTable" layoutX="1002.0" layoutY="181.0" onDragDetected="#handleDragDetectedDoneTable" onDragDropped="#handleDragDroppedDoneTable" onDragOver="#handleDragOver" prefHeight="647.0" prefWidth="269.0">
         <columns>
           <TableColumn fx:id="doneColumnDescription" prefWidth="136.0" text="Project" />
-            <TableColumn fx:id="doneColumnEditor" prefWidth="122.0" text="Editor" />
+            <TableColumn fx:id="doneColumnEditor" prefWidth="131.0" text="Editor" />
         </columns>
       </TableView>
       <Label layoutX="38.0" layoutY="86.0" prefHeight="27.0" prefWidth="75.0" text="Project: ">

@@ -22,7 +22,12 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 
 /**
  *
@@ -85,6 +90,8 @@ public class FXMLDocumentController implements Initializable {
     
     private Project selectedProject;
     
+    private static final DataFormat TaskDataFormat = new DataFormat("de.scrumboard.entity.Task");
+    
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
@@ -139,6 +146,134 @@ public class FXMLDocumentController implements Initializable {
         doneColumnEditor.setCellValueFactory(new PropertyValueFactory<>("editor"));  
     }
     
+    //<editor-fold defaultstate="collapsed" desc="Methods for Drag and Drop">
+    @FXML
+    private void handleDragDetectedToDoTable(MouseEvent event){
+        Dragboard db = toDoTable.startDragAndDrop(TransferMode.ANY);
+
+        ClipboardContent cb = new ClipboardContent();
+        //save the selected object as ClipboardContent
+        Task t = toDoTable.focusModelProperty().get().getFocusedItem();
+        cb.put(TaskDataFormat, t);
+
+        //set the dragboard content
+        db.setContent(cb);
+        
+        //remove the selected task from itemlist
+        toDoTable.getItems().remove(t);
+        toDoTable.refresh();
+    }
+    @FXML
+    private void handleDragDetectedInProgressTable(MouseEvent event){
+        Dragboard db = inProgressTable.startDragAndDrop(TransferMode.ANY);
+
+        ClipboardContent cb = new ClipboardContent();
+        //save the selected object as ClipboardContent
+        Task t = inProgressTable.focusModelProperty().get().getFocusedItem();
+        cb.put(TaskDataFormat, t);
+
+        //ste the dragboard content
+        db.setContent(cb);
+        
+        //remove the selected task from itemlist
+        inProgressTable.getItems().remove(t);
+        inProgressTable.refresh();
+    }
+    @FXML
+    private void handleDragDetectedToVerifyTable(MouseEvent event){
+        Dragboard db = toVerifyTable.startDragAndDrop(TransferMode.ANY);
+
+        ClipboardContent cb = new ClipboardContent();
+        //save the selected object as ClipboardContent
+        Task t = toVerifyTable.focusModelProperty().get().getFocusedItem();
+        cb.put(TaskDataFormat, t);
+
+        //ste the dragboard content
+        db.setContent(cb);
+        
+        //remove the selected task from itemlist
+        toVerifyTable.getItems().remove(t);
+        toVerifyTable.refresh();
+    }
+    @FXML
+    private void handleDragDetectedDoneTable(MouseEvent event){
+        Dragboard db = doneTable.startDragAndDrop(TransferMode.ANY);
+
+        ClipboardContent cb = new ClipboardContent();
+        //save the selected object as ClipboardContent
+        Task t = doneTable.focusModelProperty().get().getFocusedItem();
+        cb.put(TaskDataFormat, t);
+
+        //ste the dragboard content
+        db.setContent(cb);
+        
+        //remove the selected task from itemlist
+        doneTable.getItems().remove(t);
+        doneTable.refresh();
+    }
+    
+    
+    @FXML
+    private void handleDragOver(DragEvent event){
+        if(event.getDragboard().hasContent(TaskDataFormat)) event.acceptTransferModes(TransferMode.ANY);
+    }
+    
+    @FXML
+    private void handleDragDroppedToDoTable(DragEvent event){
+        //get the Task from dragboard
+        Task t = (Task) event.getDragboard().getContent(TaskDataFormat);
+        
+        //Change Task status to TO_DO and update task
+        t.setStatus(Status.TO_DO);
+        dao.updateTask(t);
+        
+        //Add Task to table
+        toDoTable.getItems().add(t);
+        toDoTable.refresh();
+    }
+    
+    @FXML
+    private void handleDragDroppedInProgressTable(DragEvent event){
+        //get the Task from dragboard
+        Task t = (Task) event.getDragboard().getContent(TaskDataFormat);
+        
+        //Change Task status to IN_PROGRESS and update task
+        t.setStatus(Status.IN_PROGRESS);
+        dao.updateTask(t);
+        
+        //Add Task to table
+        inProgressTable.getItems().add(t);
+        inProgressTable.refresh();
+    }
+    @FXML
+    private void handleDragDroppedToVerifyTable(DragEvent event){
+        //get the Task from dragboard
+        Task t = (Task) event.getDragboard().getContent(TaskDataFormat);
+        
+        //Change Task status to TO_VERIFY and update task
+        t.setStatus(Status.TO_VERIFY);
+        dao.updateTask(t);
+        
+        //Add Task to table
+        toVerifyTable.getItems().add(t);
+        toVerifyTable.refresh();
+    }
+    @FXML
+    private void handleDragDroppedDoneTable(DragEvent event){
+        //get the Task from dragboard
+        Task t = (Task) event.getDragboard().getContent(TaskDataFormat);
+        
+        //Change Task status to Done and update task
+        t.setStatus(Status.DONE);
+        dao.updateTask(t);
+        
+        //Add Task to table
+        doneTable.getItems().add(t);
+        doneTable.refresh();
+    }
+    //</editor-fold> 
+    
+    //<editor-fold defaultstate="collapsed" desc="Methods for table edit">
     public void editSelectedEmployee(){
     
     }
@@ -154,6 +289,7 @@ public class FXMLDocumentController implements Initializable {
     public void editSelectedDone(MouseEvent mouseEvent){
     
     }
+    //</editor-fold> 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
