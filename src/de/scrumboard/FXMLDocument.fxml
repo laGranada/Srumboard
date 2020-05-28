@@ -7,41 +7,43 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="863.0" prefWidth="1313.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.scrumboard.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="942.0" prefWidth="1645.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.scrumboard.FXMLDocumentController">
    <children>
-      <TableView fx:id="employeeTable" layoutX="38.0" layoutY="181.0" prefHeight="647.0" prefWidth="166.0">
+      <TableView fx:id="employeeTable" layoutX="38.0" layoutY="181.0" prefHeight="647.0" prefWidth="150.0">
         <columns>
-          <TableColumn fx:id="firstNameColumn" prefWidth="82.0" text="First name" />
-            <TableColumn fx:id="lastNameColumn" prefWidth="83.0" text="Last name" />
+          <TableColumn fx:id="firstNameColumn" prefWidth="75.0" text="First name" />
+            <TableColumn fx:id="lastNameColumn" prefWidth="75.0" text="Last name" />
         </columns>
       </TableView>
-      <TableView fx:id="toDoTable" layoutX="204.0" layoutY="181.0" onDragDetected="#handleDragDetectedToDoTable" onDragDropped="#handleDragDroppedToDoTable" onDragOver="#handleDragOver" prefHeight="647.0" prefWidth="260.0">
+      <TableView fx:id="toDoTable" layoutX="204.0" layoutY="181.0" onDragDetected="#handleDragDetectedToDoTable" onDragDropped="#handleDragDroppedToDoTable" onDragOver="#handleDragOver" prefHeight="647.0" prefWidth="350.0">
         <columns>
-          <TableColumn fx:id="toDoColumnDescription" prefWidth="133.0" text="Project" />
-            <TableColumn fx:id="toDoColumnEditor" prefWidth="125.0" text="Editor" />
+          <TableColumn fx:id="toDoColumnTask" prefWidth="125.0" text="Task" />
+            <TableColumn fx:id="toDoColumnDescription" prefWidth="125.0" text="Description" />
+            <TableColumn fx:id="toDoColumnEditor" prefWidth="100.0" text="Editor" />
         </columns>
       </TableView>
-      <TableView fx:id="inProgressTable" layoutX="464.0" layoutY="181.0" onDragDetected="#handleDragDetectedInProgressTable" onDragDropped="#handleDragDroppedInProgressTable" onDragOver="#handleDragOver" prefHeight="647.0" prefWidth="269.0">
+      <TableView fx:id="inProgressTable" layoutX="554.0" layoutY="181.0" onDragDetected="#handleDragDetectedInProgressTable" onDragDropped="#handleDragDroppedInProgressTable" onDragOver="#handleDragOver" prefHeight="647.0" prefWidth="350.0">
         <columns>
-          <TableColumn fx:id="inProgressColumnDescription" prefWidth="143.0" text="Project" />
-            <TableColumn fx:id="inProgressColumnEditor" prefWidth="125.0" text="Editor" />
+          <TableColumn fx:id="inProgressColumnTask" prefWidth="125.0" text="Task" />
+            <TableColumn fx:id="inProgressColumnDescription" prefWidth="125.0" text="Description" />
+            <TableColumn fx:id="inProgressColumnEditor" prefWidth="100.0" text="Editor" />
         </columns>
       </TableView>
-      <TableView fx:id="toVerifyTable" layoutX="733.0" layoutY="181.0" onDragDetected="#handleDragDetectedToVerifyTable" onDragDropped="#handleDragDroppedToVerifyTable" onDragOver="#handleDragOver" prefHeight="647.0" prefWidth="269.0">
+      <TableView fx:id="toVerifyTable" layoutX="904.0" layoutY="181.0" onDragDetected="#handleDragDetectedToVerifyTable" onDragDropped="#handleDragDroppedToVerifyTable" onDragOver="#handleDragOver" prefHeight="647.0" prefWidth="350.0">
         <columns>
-          <TableColumn fx:id="toVerifyColumnDescription" prefWidth="137.0" text="Project" />
-            <TableColumn fx:id="toVerifyColumnEditor" prefWidth="131.0" text="Editor" />
+          <TableColumn fx:id="toVerifyColumnTask" prefWidth="125.0" text="Task" />
+            <TableColumn fx:id="toVerifyColumnDescription" prefWidth="125.0" text="Description" />
+            <TableColumn fx:id="toVerifyColumnEditor" prefWidth="100.0" text="Editor" />
         </columns>
       </TableView>
-      <TableView fx:id="doneTable" layoutX="1002.0" layoutY="181.0" onDragDetected="#handleDragDetectedDoneTable" onDragDropped="#handleDragDroppedDoneTable" onDragOver="#handleDragOver" prefHeight="647.0" prefWidth="269.0">
+      <TableView fx:id="doneTable" layoutX="1254.0" layoutY="181.0" onDragDetected="#handleDragDetectedDoneTable" onDragDropped="#handleDragDroppedDoneTable" onDragOver="#handleDragOver" prefHeight="647.0" prefWidth="350.0">
         <columns>
-          <TableColumn fx:id="doneColumnDescription" prefWidth="136.0" text="Project" />
-            <TableColumn fx:id="doneColumnEditor" prefWidth="131.0" text="Editor" />
+          <TableColumn fx:id="doneColumnTask" prefWidth="125.0" text="Task" />
+            <TableColumn fx:id="doneColumnDescription" prefWidth="125.0" text="Description" />
+            <TableColumn fx:id="doneColumnEditor" prefWidth="100.0" text="Editor" />
         </columns>
       </TableView>
       <Label layoutX="38.0" layoutY="86.0" prefHeight="27.0" prefWidth="75.0" text="Project: ">
@@ -50,7 +52,7 @@
          </font>
       </Label>
       <ChoiceBox fx:id="projects" layoutX="113.0" layoutY="87.0" prefHeight="25.0" prefWidth="166.0" />
-      <MenuButton layoutX="1089.0" layoutY="85.0" mnemonicParsing="false" text="Edit">
+      <MenuButton layoutX="1198.0" layoutY="85.0" mnemonicParsing="false" text="Edit">
         <items>
           <MenuItem mnemonicParsing="false" text="Add Projekt" />
           <MenuItem mnemonicParsing="false" text="Add Task" />
@@ -64,58 +66,30 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Label alignment="CENTER" layoutX="38.0" layoutY="156.0" prefHeight="25.0" prefWidth="166.0" text="Employees">
+      <Label alignment="CENTER" layoutX="38.0" layoutY="156.0" prefHeight="25.0" prefWidth="150.0" text="Employees">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="204.0" layoutY="156.0" prefHeight="25.0" prefWidth="260.0" text="To Do">
+      <Label alignment="CENTER" layoutX="204.0" layoutY="156.0" prefHeight="25.0" prefWidth="350.0" text="To Do">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="464.0" layoutY="156.0" prefHeight="25.0" prefWidth="269.0" text="In Progress">
+      <Label alignment="CENTER" layoutX="554.0" layoutY="156.0" prefHeight="25.0" prefWidth="350.0" text="In Progress">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="733.0" layoutY="156.0" prefHeight="25.0" prefWidth="269.0" text="To Verify">
+      <Label alignment="CENTER" layoutX="904.0" layoutY="156.0" prefHeight="25.0" prefWidth="350.0" text="To Verify">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="1002.0" layoutY="156.0" prefHeight="25.0" prefWidth="269.0" text="Done">
+      <Label alignment="CENTER" layoutX="1254.0" layoutY="156.0" prefHeight="25.0" prefWidth="350.0" text="Done">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      
-      <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="180.0" layoutY="160.0" onMousePressed="#editSelectedEmployee">
-        <image>
-            <Image url="@images/EditIcon.png">
-                
-            </Image>
-        </image>
-      </ImageView>
-      <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="440.0" layoutY="160.0" onMousePressed="#editSelectedToDo">
-         <image>
-            <Image url="@images/EditIcon.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="711.0" layoutY="160.0" onMousePressed="#editSelectedInProgress">
-         <image>
-            <Image url="@images/EditIcon.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="978.0" layoutY="160.0" onMousePressed="#editSelectedToVerify">
-         <image>
-            <Image url="@images/EditIcon.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="18.0" fitWidth="16.0" layoutX="1246.0" layoutY="160.0" onMousePressed="#editSelectedDone">
-         <image>
-            <Image url="@images/EditIcon.png" />
-         </image>
-      </ImageView>
    </children> 
 </AnchorPane>

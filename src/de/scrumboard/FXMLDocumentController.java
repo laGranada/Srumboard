@@ -21,7 +21,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TreeTableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import javafx.scene.input.DragEvent;
@@ -54,6 +56,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TableView<Task> toDoTable;
     @FXML
+    private TableColumn<Task, String> toDoColumnTask;
+    @FXML
     private TableColumn<Task, String> toDoColumnDescription;
     @FXML
     private TableColumn<Task, String> toDoColumnEditor;
@@ -62,6 +66,8 @@ public class FXMLDocumentController implements Initializable {
     //TreeTable for inProgress
     @FXML
     private TableView<Task> inProgressTable;
+    @FXML
+    private TableColumn<Task, String> inProgressColumnTask;
     @FXML
     private TableColumn<Task, String> inProgressColumnDescription;
     @FXML
@@ -72,6 +78,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TableView<Task> toVerifyTable;
     @FXML
+    private TableColumn<Task, String> toVerifyColumnTask;
+    @FXML
     private TableColumn<Task, String> toVerifyColumnDescription;
     @FXML
     private TableColumn<Task, String> toVerifyColumnEditor;
@@ -81,9 +89,13 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TableView<Task> doneTable;
     @FXML
-    private TableColumn<Task, String> doneColumnDescription;
+    private TableColumn<Task, String> doneColumnTask;
     @FXML
-    private TableColumn<Task, String> doneColumnEditor;
+    private TableColumn<Task, String> doneColumnDescription;
+//    @FXML
+//    private TableColumn<Task, String> doneColumnEditor;
+    @FXML
+    private TableColumn<Task, ChoiceBox<Employee>> doneColumnEditor;
     
     
     private List<Project> projectList;
@@ -91,12 +103,7 @@ public class FXMLDocumentController implements Initializable {
     private Project selectedProject;
     
     private static final DataFormat TaskDataFormat = new DataFormat("de.scrumboard.entity.Task");
-    
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-
-    }
+    private static final DataFormat EmployeeDataFormat = new DataFormat("de.scrumboard.entity.Employee");
     
     @FXML 
     private void loadTableData(ActionEvent event){
@@ -130,23 +137,40 @@ public class FXMLDocumentController implements Initializable {
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));   
         
         //for toDoTable
-        toDoColumnDescription.setCellValueFactory(new PropertyValueFactory<>("stringForTable"));
+        toDoColumnTask.setCellValueFactory(new PropertyValueFactory<>("name"));
+        toDoColumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         toDoColumnEditor.setCellValueFactory(new PropertyValueFactory<>("editor"));
         
         //for inProgressTable
-        inProgressColumnDescription.setCellValueFactory(new PropertyValueFactory<>("stringForTable"));
+        inProgressColumnTask.setCellValueFactory(new PropertyValueFactory<>("name"));
+        inProgressColumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         inProgressColumnEditor.setCellValueFactory(new PropertyValueFactory<>("editor"));
         
         //for toVerifyTable
-        toVerifyColumnDescription.setCellValueFactory(new PropertyValueFactory<>("stringForTable"));
+        toVerifyColumnTask.setCellValueFactory(new PropertyValueFactory<>("name"));
+        toVerifyColumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         toVerifyColumnEditor.setCellValueFactory(new PropertyValueFactory<>("editor"));
 
         //for doneTable
-        doneColumnDescription.setCellValueFactory(new PropertyValueFactory<>("stringForTable"));
+        doneColumnTask.setCellValueFactory(new PropertyValueFactory<>("name"));
+        doneColumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         doneColumnEditor.setCellValueFactory(new PropertyValueFactory<>("editor"));  
     }
     
     //<editor-fold defaultstate="collapsed" desc="Methods for Drag and Drop">
+    @FXML
+    private void handleDragDetectedEmployeeTable(MouseEvent event){
+        Dragboard db = toDoTable.startDragAndDrop(TransferMode.ANY);
+
+        ClipboardContent cb = new ClipboardContent();
+        //save the selected object as ClipboardContent
+        Employee e = employeeTable.focusModelProperty().get().getFocusedItem();
+        cb.put(EmployeeDataFormat, e);
+
+        //set the dragboard content
+        db.setContent(cb);
+    }
+    
     @FXML
     private void handleDragDetectedToDoTable(MouseEvent event){
         Dragboard db = toDoTable.startDragAndDrop(TransferMode.ANY);
@@ -212,7 +236,6 @@ public class FXMLDocumentController implements Initializable {
         doneTable.refresh();
     }
     
-    
     @FXML
     private void handleDragOver(DragEvent event){
         if(event.getDragboard().hasContent(TaskDataFormat)) event.acceptTransferModes(TransferMode.ANY);
@@ -220,75 +243,87 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void handleDragDroppedToDoTable(DragEvent event){
-        //get the Task from dragboard
-        Task t = (Task) event.getDragboard().getContent(TaskDataFormat);
-        
-        //Change Task status to TO_DO and update task
-        t.setStatus(Status.TO_DO);
-        dao.updateTask(t);
-        
-        //Add Task to table
-        toDoTable.getItems().add(t);
-        toDoTable.refresh();
+        if(event.getDragboard().hasContent(TaskDataFormat)){
+            //get the Task from dragboard
+            Task t = (Task) event.getDragboard().getContent(TaskDataFormat);
+
+            //Change Task status to TO_DO and update task
+            t.setStatus(Status.TO_DO);
+            dao.updateTask(t);
+
+            //Add Task to table
+            toDoTable.getItems().add(t);
+            toDoTable.refresh();
+        }
     }
     
     @FXML
     private void handleDragDroppedInProgressTable(DragEvent event){
-        //get the Task from dragboard
-        Task t = (Task) event.getDragboard().getContent(TaskDataFormat);
-        
-        //Change Task status to IN_PROGRESS and update task
-        t.setStatus(Status.IN_PROGRESS);
-        dao.updateTask(t);
-        
-        //Add Task to table
-        inProgressTable.getItems().add(t);
-        inProgressTable.refresh();
+        if(event.getDragboard().hasContent(TaskDataFormat)){
+            //get the Task from dragboard
+            Task t = (Task) event.getDragboard().getContent(TaskDataFormat);
+
+            //Change Task status to IN_PROGRESS and update task
+            t.setStatus(Status.IN_PROGRESS);
+            dao.updateTask(t);
+
+            //Add Task to table
+            inProgressTable.getItems().add(t);
+            inProgressTable.refresh();
+        }
     }
     @FXML
     private void handleDragDroppedToVerifyTable(DragEvent event){
-        //get the Task from dragboard
-        Task t = (Task) event.getDragboard().getContent(TaskDataFormat);
-        
-        //Change Task status to TO_VERIFY and update task
-        t.setStatus(Status.TO_VERIFY);
-        dao.updateTask(t);
-        
-        //Add Task to table
-        toVerifyTable.getItems().add(t);
-        toVerifyTable.refresh();
+        if(event.getDragboard().hasContent(TaskDataFormat)){
+            //get the Task from dragboard
+            Task t = (Task) event.getDragboard().getContent(TaskDataFormat);
+
+            //Change Task status to TO_VERIFY and update task
+            t.setStatus(Status.TO_VERIFY);
+            dao.updateTask(t);
+
+            //Add Task to table
+            toVerifyTable.getItems().add(t);
+            toVerifyTable.refresh();
+        }
     }
     @FXML
     private void handleDragDroppedDoneTable(DragEvent event){
-        //get the Task from dragboard
-        Task t = (Task) event.getDragboard().getContent(TaskDataFormat);
-        
-        //Change Task status to Done and update task
-        t.setStatus(Status.DONE);
-        dao.updateTask(t);
-        
-        //Add Task to table
-        doneTable.getItems().add(t);
-        doneTable.refresh();
+        if(event.getDragboard().hasContent(TaskDataFormat)){
+            //get the Task from dragboard
+            Task t = (Task) event.getDragboard().getContent(TaskDataFormat);
+
+            //Change Task status to Done and update task
+            t.setStatus(Status.DONE);
+            dao.updateTask(t);
+
+            //Add Task to table
+            doneTable.getItems().add(t);
+            doneTable.refresh();
+        }
     }
     //</editor-fold> 
     
     //<editor-fold defaultstate="collapsed" desc="Methods for table edit">
-    public void editSelectedEmployee(){
-    
+    /**
+     * This method will allow the user to double click on a cell and update
+     * the first name of the person
+     */
+    public void changeFirstNameCellEvent(CellEditEvent edittedCell){
+        Employee employeeSelected =  employeeTable.getSelectionModel().getSelectedItem();
+        employeeSelected.setFirstName(edittedCell.getNewValue().toString());
+        dao.updateEmployee(employeeSelected);
     }
-    public void editSelectedToDo(MouseEvent mouseEvent){
-    
+    /**
+     * This method will allow the user to double click on a cell and update
+     * the last name of the person
+     */
+    public void changeLastNameCellEvent(CellEditEvent edittedCell){
+        Employee employeeSelected =  employeeTable.getSelectionModel().getSelectedItem();
+        employeeSelected.setLastName(edittedCell.getNewValue().toString());
+        dao.updateEmployee(employeeSelected);
     }
-    public void editSelectedInProgress(MouseEvent mouseEvent){
-    
-    }
-    public void editSelectedToVerify(MouseEvent mouseEvent){
-    
-    }
-    public void editSelectedDone(MouseEvent mouseEvent){
-    
-    }
+
     //</editor-fold> 
     
     @Override
@@ -297,6 +332,31 @@ public class FXMLDocumentController implements Initializable {
         System.out.println("Size of project list = " + projectList.size());
         projects.setItems(FXCollections.observableArrayList(projectList));
         System.out.println("Size of project list = " + projects.getItems().toString());
+        
+        //allow the employeeTable and all his columns to be editable
+        employeeTable.setEditable(true);
+        firstNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        lastNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        
+        //allow the toDoTable to be editable
+        toDoTable.setEditable(true);
+        toDoColumnTask.setCellFactory(TextFieldTableCell.forTableColumn());
+        toDoColumnDescription.setCellFactory(TextFieldTableCell.forTableColumn());
+        
+        //allow the inProgressTable to be editable
+        inProgressTable.setEditable(true);
+        inProgressColumnTask.setCellFactory(TextFieldTableCell.forTableColumn());
+        inProgressColumnDescription.setCellFactory(TextFieldTableCell.forTableColumn());
+        
+        //allow the toVerifyTable to be editable
+        toVerifyTable.setEditable(true);
+        toVerifyColumnTask.setCellFactory(TextFieldTableCell.forTableColumn());
+        toVerifyColumnDescription.setCellFactory(TextFieldTableCell.forTableColumn());
+        
+        //allow the doneTable to be editable
+        doneTable.setEditable(true);
+        doneColumnTask.setCellFactory(TextFieldTableCell.forTableColumn());
+        doneColumnDescription.setCellFactory(TextFieldTableCell.forTableColumn());
     }    
     
 }

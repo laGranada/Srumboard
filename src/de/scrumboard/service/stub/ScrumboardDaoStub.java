@@ -47,7 +47,7 @@ public class ScrumboardDaoStub implements ScrumboardService{
         
         }//end for
         Task inP = new Task(0, "Task " + 0,"description " + 0,Status.DONE);
-        inP.setEditor(employees.get(0));
+        inP.setEditor(employees.get(5));
         tasks.add(inP);
         
         //generate two projects

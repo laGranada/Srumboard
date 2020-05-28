@@ -22,7 +22,6 @@ public class Task implements Serializable {
     
     private Status status;
 
-    private String stringForTable;
     
     public Task() {
     }
@@ -39,8 +38,6 @@ public class Task implements Serializable {
         this.name = name;
         this.description = description;
         this.status = status;
-        
-        this.stringForTable = name + "\nDescription:\n" + description;
     }
     
     
@@ -83,7 +80,6 @@ public class Task implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-        this.stringForTable = name + "\nDescription:\n" + description;
     }
 
     public String getDescription() {
@@ -92,7 +88,6 @@ public class Task implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-        this.stringForTable = name + "\nDescription:\n" + description;
     }
 
     public Employee getEditor() {
@@ -109,10 +104,6 @@ public class Task implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-    
-    public String getStringForTable() {
-        return stringForTable;
     }
     //</editor-fold> 
 

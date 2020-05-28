@@ -46,8 +46,8 @@ public class FXML_LoginController implements Initializable {
     @FXML
     private void handleButtonAction(ActionEvent event) throws Exception{
         //TODO errorLabel if username or password empty
-//        Employee emp = dao.findEmployeeByUsername(usernameTxtField.getText());
-//        if(emp.getPassword().equals(pwField.getText())){
+        Employee emp = dao.findEmployeeByUsername(usernameTxtField.getText());
+        if(emp.getPassword().equals(pwField.getText())){
             Parent homePageParent = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
             Scene homePageScene = new Scene(homePageParent);
 
@@ -55,9 +55,9 @@ public class FXML_LoginController implements Initializable {
             appStage.hide();
             appStage.setScene(homePageScene);
             appStage.show();
-//        }else{
-//            errorLabel.setText("Incorrect username or password!");
-//        }    
+        }else{
+            errorLabel.setText("Incorrect username or password!");
+        }    
     }
     
     /**
