@@ -113,12 +113,14 @@ public class ScrumboardDaoStub implements ScrumboardService{
 
     @Override
     public Task createTask(Task task) {
-        return new Task(tasks.size() + 1, task.getName(), task.getDescription(), task.getStatus());
+        Task t = new Task(tasks.size() + 1, task.getName(), task.getDescription(), task.getStatus());
+        t.setEditor(task.getEditor());
+        return t;
     }
 
     @Override
     public Project createProject(Project project) {
-        return new Project(projects.size(), 
+        return new Project(projects.size() + 1, 
                            project.getName(), 
                            project.getEmployees(), 
                            project.getTasks(), 

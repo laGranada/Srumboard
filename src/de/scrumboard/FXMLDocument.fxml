@@ -7,7 +7,13 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="942.0" prefWidth="1645.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.scrumboard.FXMLDocumentController">
@@ -52,16 +58,17 @@
          </font>
       </Label>
       <ChoiceBox fx:id="projects" layoutX="113.0" layoutY="87.0" prefHeight="25.0" prefWidth="166.0" />
-      <MenuButton layoutX="1198.0" layoutY="85.0" mnemonicParsing="false" text="Edit">
+      <MenuButton layoutX="1198.0" layoutY="85.0" mnemonicParsing="false" text="Add">
         <items>
-          <MenuItem mnemonicParsing="false" text="Add Projekt" />
-          <MenuItem mnemonicParsing="false" text="Add Task" />
+          <MenuItem mnemonicParsing="false" onAction="#openAddProjectPane" text="Projekt" />
+          <MenuItem mnemonicParsing="false" onAction="#openAddTaskPane" text="Task" />
+            <MenuItem mnemonicParsing="false" onAction="#openAddEmployeePane" text="Employee" />
         </items>
          <font>
             <Font size="14.0" />
          </font>
       </MenuButton>
-      <Button fx:id="selectBtn" layoutX="288.0" layoutY="85.0" mnemonicParsing="false" onAction="#loadTableData" text="Select">
+      <Button fx:id="selectBtn" layoutX="288.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleSelectBtn" text="Select">
          <font>
             <Font size="14.0" />
          </font>
@@ -91,5 +98,129 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
+      <TitledPane fx:id="addTaskPane" layoutX="512.0" layoutY="135.0" prefHeight="378.0" prefWidth="310.0" text="Add Task">
+         <content>
+            <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="319.0" prefWidth="324.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="158.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="211.0" minHeight="10.0" prefHeight="88.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="358.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="341.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="356.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label prefHeight="17.0" prefWidth="129.0" text="Name">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="17.0" prefWidth="129.0" text="Description" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="103.0" prefHeight="17.0" prefWidth="129.0" text="Editor" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="174.0" prefHeight="17.0" prefWidth="129.0" text="Status" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="taskCancleBtn" mnemonicParsing="false" onAction="#closeAndClearAddTaskPane" text="Cancle" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="taskAddBtn" mnemonicParsing="false" onAction="#addTask" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <ChoiceBox fx:id="taskEmployeeCB" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ChoiceBox fx:id="taskStatusCB" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="taskNameTxt" GridPane.columnIndex="1" />
+                  <TextArea fx:id="taskDescriptionTxt" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+         </content>
+      </TitledPane>
+      <TitledPane fx:id="addProjectPane" layoutX="522.0" layoutY="161.0" prefHeight="272.0" prefWidth="326.0" text="Add Project">
+         <content>
+            <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="181.0" prefWidth="324.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="158.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="211.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="356.0" minHeight="10.0" prefHeight="87.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label prefHeight="17.0" prefWidth="129.0" text="Name">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="17.0" prefWidth="129.0" text="Description" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="projectCancleBtn" mnemonicParsing="false" onAction="#closeAndClearAddProjectPane" text="Cancle" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="projectAddBtn" mnemonicParsing="false" onAction="#addProject" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="projectNameTxt" GridPane.columnIndex="1" />
+                  <TextField fx:id="projectDescriptionTxt" layoutX="172.0" layoutY="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+         </content>
+      </TitledPane>
+      <TitledPane fx:id="addEmployeePane" layoutX="558.0" layoutY="184.0" prefHeight="201.0" prefWidth="326.0" text="Add Employee">
+         <content>
+            <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="136.0" prefWidth="324.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="158.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="356.0" minHeight="10.0" prefHeight="87.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label prefHeight="17.0" prefWidth="129.0" text="Employee">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="employeeCancleBtn" mnemonicParsing="false" onAction="#closeAndClearAddEmployeePane" text="Cancle" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="employeeAddBtn" mnemonicParsing="false" onAction="#addEmployee" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <ChoiceBox fx:id="employeeCB" prefWidth="150.0" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+         </content>
+      </TitledPane>
    </children> 
 </AnchorPane>

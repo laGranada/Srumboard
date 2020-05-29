@@ -12,25 +12,26 @@ package de.scrumboard.entity;
  * @author MaggieSaurusRex
  */
 public enum Status {
-    TO_DO("Offen", "Aufgabe muss noch erledigt werden"),
-    IN_PROGRESS("Bearbeitung", "Aufgabe wird bearbeitet"),
-    TO_VERIFY("Verifizierung", "Aufgabe wird verifiziert"),
-    DONE("Fertig", "Aufgabe wurde fertiggestellt");
+    TO_DO("To Do"),
+    IN_PROGRESS("In progress"),
+    TO_VERIFY("To verify"),
+    DONE("Done");
     
     private final String shortDescription;
     
-    private final String description;
     
-    private Status(String shortDescription, String description){
+    private Status(String shortDescription){
         this.shortDescription = shortDescription;
-        this.description = description;
     }
     
     public String getShortDescription() {
         return shortDescription;
     }
 
-    public String getDescription() {
-        return description;
+    @Override
+    public String toString() {
+        return shortDescription;
     }
+    
+    
 }

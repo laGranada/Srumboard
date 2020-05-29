@@ -11,6 +11,7 @@ import de.scrumboard.entity.Status;
 import de.scrumboard.entity.Task;
 import de.scrumboard.service.stub.ScrumboardDaoStub;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -19,8 +20,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeTableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -40,10 +46,11 @@ public class FXMLDocumentController implements Initializable {
     ScrumboardDaoStub dao = new ScrumboardDaoStub();
     
     @FXML
-    private ChoiceBox<Project> projects;
-    
+    private ChoiceBox<Project> projects;    
     @FXML
     private Button selectBtn;
+    
+    
     //TableView for employee
     @FXML
     private TableView<Employee> employeeTable;
@@ -92,10 +99,49 @@ public class FXMLDocumentController implements Initializable {
     private TableColumn<Task, String> doneColumnTask;
     @FXML
     private TableColumn<Task, String> doneColumnDescription;
-//    @FXML
-//    private TableColumn<Task, String> doneColumnEditor;
     @FXML
-    private TableColumn<Task, ChoiceBox<Employee>> doneColumnEditor;
+    private TableColumn<Task, String> doneColumnEditor;
+    
+    //Add taskPane
+    @FXML
+    private TitledPane addTaskPane;
+    @FXML
+    private TextField taskNameTxt;
+    @FXML
+    private TextArea taskDescriptionTxt;
+    @FXML
+    private ChoiceBox<Employee> taskEmployeeCB;
+    @FXML
+    private ChoiceBox<Status> taskStatusCB;
+    @FXML
+    private Button taskCancleBtn; 
+    @FXML
+    private Button taskAddBtn; 
+    
+    //Add ProjektPane
+    @FXML
+    private TitledPane addProjectPane;
+    @FXML
+    private TextField projectNameTxt;
+    @FXML
+    private TextField projectDescriptionTxt;
+
+    @FXML
+    private Button projectCancleBtn; 
+    @FXML
+    private Button projectAddBtn; 
+    
+    //Add EmployeePane
+    @FXML
+    private TitledPane addEmployeePane;
+    @FXML
+    private ChoiceBox<Employee> employeeCB;
+
+    @FXML
+    private Button employeeCancleBtn; 
+    @FXML
+    private Button employeeAddBtn; 
+
     
     
     private List<Project> projectList;
@@ -106,7 +152,11 @@ public class FXMLDocumentController implements Initializable {
     private static final DataFormat EmployeeDataFormat = new DataFormat("de.scrumboard.entity.Employee");
     
     @FXML 
-    private void loadTableData(ActionEvent event){
+    private void handleSelectBtn(ActionEvent event){
+        loadTableData();
+    }
+    
+    private void loadTableData(){
         selectedProject = projects.getValue();
         initiateCols();
         
@@ -250,6 +300,10 @@ public class FXMLDocumentController implements Initializable {
             //Change Task status to TO_DO and update task
             t.setStatus(Status.TO_DO);
             dao.updateTask(t);
+            for(Task task : selectedProject.getTasks()){
+                if(task.getId() == t.getId()) task = t;
+            }
+            
 
             //Add Task to table
             toDoTable.getItems().add(t);
@@ -266,6 +320,9 @@ public class FXMLDocumentController implements Initializable {
             //Change Task status to IN_PROGRESS and update task
             t.setStatus(Status.IN_PROGRESS);
             dao.updateTask(t);
+            for(Task task : selectedProject.getTasks()){
+                if(task.getId() == t.getId()) task = t;
+            }
 
             //Add Task to table
             inProgressTable.getItems().add(t);
@@ -281,6 +338,9 @@ public class FXMLDocumentController implements Initializable {
             //Change Task status to TO_VERIFY and update task
             t.setStatus(Status.TO_VERIFY);
             dao.updateTask(t);
+            for(Task task : selectedProject.getTasks()){
+                if(task.getId() == t.getId()) task = t;
+            }
 
             //Add Task to table
             toVerifyTable.getItems().add(t);
@@ -296,6 +356,9 @@ public class FXMLDocumentController implements Initializable {
             //Change Task status to Done and update task
             t.setStatus(Status.DONE);
             dao.updateTask(t);
+            for(Task task : selectedProject.getTasks()){
+                if(task.getId() == t.getId()) task = t;
+            }
 
             //Add Task to table
             doneTable.getItems().add(t);
@@ -326,8 +389,87 @@ public class FXMLDocumentController implements Initializable {
 
     //</editor-fold> 
     
+    //<editor-fold defaultstate="collapsed" desc="Methods to add Tasks">
+    @FXML
+    private void openAddTaskPane(){
+        taskEmployeeCB.setItems(FXCollections.observableArrayList(selectedProject.getEmployees()));
+        addTaskPane.setVisible(true);
+    }
+    @FXML
+    private void closeAndClearAddTaskPane(){
+        addTaskPane.setVisible(false);
+        taskNameTxt.clear();
+        taskDescriptionTxt.clear();
+    }
+    @FXML
+    private void addTask(){
+        Task t = new Task(taskNameTxt.getText(),
+                taskDescriptionTxt.getText(),
+                taskEmployeeCB.getValue(),
+                taskStatusCB.getValue());
+        Task addedT = dao.createTask(t);
+        
+        selectedProject.addTask(addedT);
+        dao.updateProject(selectedProject);
+        loadTableData();
+        closeAndClearAddTaskPane();
+    }
+    //</editor-fold> 
+    
+    //<editor-fold defaultstate="collapsed" desc="Methods to add project">
+    @FXML
+    private void openAddProjectPane(){
+        addProjectPane.setVisible(true);
+    }
+    @FXML
+    private void closeAndClearAddProjectPane(){
+        addProjectPane.setVisible(false);
+        projectNameTxt.clear();
+        projectDescriptionTxt.clear();
+    }
+    @FXML
+    private void addProject(){
+        Project p = new Project();
+        p.setName(projectNameTxt.getText());
+        p.setDescription(projectDescriptionTxt.getText());
+        p.setEmployees(new ArrayList<Employee>());
+        p.setTasks(new ArrayList<Task>());
+
+        Project addedP = dao.createProject(p);
+        
+        projectList.add(addedP);
+        
+        projects.getItems().add(addedP);
+        
+        loadTableData();
+        closeAndClearAddProjectPane();
+    }
+    //</editor-fold> 
+    
+    //<editor-fold defaultstate="collapsed" desc="Methods to add Employee">
+    @FXML
+    private void openAddEmployeePane(){
+        addEmployeePane.setVisible(true);
+    }
+    @FXML
+    private void closeAndClearAddEmployeePane(){
+        addEmployeePane.setVisible(false);
+    }
+    @FXML
+    private void addEmployee(){
+        selectedProject.addMember(employeeCB.getValue());
+        dao.updateProject(selectedProject);
+        loadTableData();
+        closeAndClearAddEmployeePane();
+    }
+    //</editor-fold> 
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        addTaskPane.setVisible(false);
+        addProjectPane.setVisible(false);
+        addEmployeePane.setVisible(false);
+        
         projectList = dao.findAllProjects();
         System.out.println("Size of project list = " + projectList.size());
         projects.setItems(FXCollections.observableArrayList(projectList));
@@ -357,6 +499,13 @@ public class FXMLDocumentController implements Initializable {
         doneTable.setEditable(true);
         doneColumnTask.setCellFactory(TextFieldTableCell.forTableColumn());
         doneColumnDescription.setCellFactory(TextFieldTableCell.forTableColumn());
+        
+        taskStatusCB.getItems().add(Status.TO_DO);
+        taskStatusCB.getItems().add(Status.IN_PROGRESS);
+        taskStatusCB.getItems().add(Status.TO_VERIFY);
+        taskStatusCB.getItems().add(Status.DONE);
+        
+        employeeCB.setItems(FXCollections.observableArrayList(dao.findAllEmployees()));
     }    
     
 }

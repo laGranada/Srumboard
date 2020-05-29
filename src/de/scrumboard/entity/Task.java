@@ -25,6 +25,19 @@ public class Task implements Serializable {
     
     public Task() {
     }
+    
+    /**
+     * 
+     * @param name
+     * @param description
+     * @param editor
+     */
+    public Task(String name, String description, Employee editor, Status status) {
+        this.name = name;
+        this.description = description;
+        this.editor = editor;
+        this.status = status;
+    }
 
     /**
      * Only for Dao stub
